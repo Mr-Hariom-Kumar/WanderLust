@@ -1,0 +1,26 @@
+<%layout("./layouts/boilerplate")-%>
+<body >
+    <div class="row col-8 offset-2 mt-2">
+        <h3>Listing Detail</h3>
+    </div>
+    <div class="card col-6 offset-2 mt-2">
+        <img src="<%=gethotel.image%>" class="card-img-top show-image" alt="Listing Image">
+        <div class="card-body">
+          <p class="card-text mt-1">
+            <b><%=gethotel.title%></b><br>
+            <%=gethotel.description%><br>
+            &#x20B9;<%=gethotel.price.toLocaleString("en-IN")%><br>
+            <%=gethotel.location%><br>
+            <%=gethotel.country%><br>
+          </p>
+        </div>
+    </div>
+    <div class="btns offset-2">
+        <form method="get" action="/listing/<%=gethotel.id%>/edit">
+            <button class="btn add-btn  offset-3 edit-btn">Edit</button>
+        </form>
+        <form method="post" action="/listing/<%=gethotel.id%>?_method=DELETE">
+            <button class="btn btn-dark offset-4 ms-5 edit-btn">Delete</button>
+        </form>
+    </div>
+</body>
