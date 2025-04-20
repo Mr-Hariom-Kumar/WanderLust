@@ -11,29 +11,30 @@
                         name="listing[title]" 
                         placeholder="Enter Title"
                         class="form-control"
+                         required
                     >
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea type="text" name="listing[description]" placeholder="Enter Description" class="form-control"></textarea>
+                    <textarea type="text" name="listing[description]" placeholder="Enter Description" class="form-control" required></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image URL</label>
-                    <input type="text" name="listing[image]" placeholder="Enter image url" class="form-control">
+                    <input type="text" name="listing[image]" placeholder="Enter image url" class="form-control" required>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" name="listing[price]" placeholder="eg.&#x20B9;1200." class="form-control">
+                        <input type="number" name="listing[price]" placeholder="eg.&#x20B9;1200." class="form-control" required>
                     </div>
                     <div class="mb-3 col-md-8">
                         <label for="location" class="form-label">Location</label>
-                        <input type="text" name="listing[location]" placeholder="eg. Jaipur,Shimla" class="form-control">
+                        <input type="text" name="listing[location]" placeholder="eg. Jaipur,Shimla" class="form-control" required>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
-                    <input type="text" name="listing[country]" placeholder="India" class="form-control">
+                    <input type="text" name="listing[country]" placeholder="India" class="form-control" required>
                 </div>
                 <button class="btn btn-dark add-btn">Add</button>
             </form>
