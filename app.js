@@ -7,6 +7,7 @@ const path=require('path')
 const methodOverride=require('method-override')
 const engine = require('ejs-mate')
 const wrapAsync=require("./utils/wrapAsync.js")
+const review_Model=require("./models/review.js")
 main().then(()=>{
     console.log("connected to db")
 }).catch((err)=>{
@@ -48,9 +49,29 @@ app.post("/listing",wrapAsync(async(req,res,next)=>{
 //show routes
 app.get("/listing/:id",wrapAsync(async(req,res)=>{
     let {id}= req.params;
-    const gethotel=await model.findById(id);
+    const gethotel=await model.findById(id).populate("reviewList");
     res.render("./listing/show.ejs",{gethotel});
 }))
+
+//post review route
+app.post("/listing/:id/reviews",wrapAsync(async(req,res)=>{
+    let hotel= await model.findById(req.params.id)
+    // console.log(req.body.review)
+    let newReview=new review_Model(req.body.review)
+    await newReview.save()
+    hotel.reviewList.push(newReview)
+    await hotel.save()
+    console.log(hotel)
+    res.redirect(`/listing/${req.params.id}`)
+}))
+
+//delete reveiw route
+app.delete("/listing/:id/reviews/:reviewId",async(req,res)=>{
+    let {id,reviewId}=req.params;
+    await model.findByIdAndUpdate(id,{$pull: {reviews: reviewId}})
+    await review_Model.findByIdAndDelete(reviewId)
+    res.redirect(`/listing/${req.params.id}`)
+})
 //edit
 app.get("/listing/:id/Edit",wrapAsync(async (req,res)=>{
     let {id}=req.params;
@@ -69,12 +90,10 @@ app.delete("/listing/:id",wrapAsync(async(req,res)=>{
     await model.findByIdAndDelete(id);
     res.redirect("/listing")
 }))
-app.use((err,req,res,next)=>{
-    res.send("something went wrong")
-})
-app.use(()=>{
-    
-})
+// app.use((err,req,res,next)=>{
+//     res.send("something went wrong")
+// })
+
 app.listen(port,()=>{
     console.log(`app is listening on port${port}`);
 })
